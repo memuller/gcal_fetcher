@@ -1,0 +1,7 @@
+= gcal_fetcher
+
+Description goes here.
+
+== Copyright
+
+Copyright (c) 2009 Matheus E. Muller (@home). See LICENSE for details.
