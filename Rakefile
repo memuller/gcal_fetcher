@@ -5,11 +5,11 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "gcal_fetcher"
-    gem.summary = %Q{TODO}
+    gem.summary = %Q{Gcal_fetcher is a very simple gem for fetching public Google Calendars via XML and parsing them.}
     gem.email = "hello@memuller.com"
     gem.homepage = "http://github.com/memuller/gcal_fetcher"
-    gem.authors = ["Matheus E. Muller (@home)"]
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
+    gem.authors = ["Matheus E. Muller"]
+    %w(pauldix-feedzirra sinatra).each{|d| gem.add_dependency d}
   end
 
 rescue LoadError
@@ -19,6 +19,7 @@ end
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.libs << 'lib' << 'spec'
+  spec.spec_opts = ['--options', "\"#{File.dirname(__FILE__)}/spec/spec.opts\""]
   spec.spec_files = FileList['spec/**/*_spec.rb']
 end
 
