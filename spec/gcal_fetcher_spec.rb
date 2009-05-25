@@ -21,18 +21,28 @@ describe GcalFetcher::Connection do
 
 end
 
-describe "feed information" do
+describe GcalFetcher::Item do
   before :all do
-  
+    @c = GcalFetcher::Connection.new
+    @items = @c.entries.map{|entry| GcalFetcher::Item.new(entry)}
+    @n_entries = @c.entries.size
   end
-  it "should have a title"
 
-  it "should have an author"
-
-  it "should have a begin date"
-
-  it "should have an status"
-
+  it "should have a title" do
+    @items.select{|item| item.title.class == String}.size.should equal @n_entries
+  end
+  it "should have an author" do
+    @items.select{|item| item.author.class == String}.size.should equal @n_entries
+  end
+  it "should have a begin date" do
+    @items.select{|item| item.begins_at.class == DateTime}.size.should equal @n_entries
+  end
+  it "should have an end date" do
+    @items.select{|item| item.ends_at.class == DateTime}.size.should equal @n_entries
+  end
+  it "should have an status, as a symbol" do
+    @items.select{|item| item.status.class == Symbol}.size.should equal @n_entries
+  end
 end
 
 describe "grouped feeds" do
