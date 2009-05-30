@@ -11,9 +11,9 @@ end
 
 def start_sinatra
   pid = Process.fork do
-    exec "ruby #{File.join(File.dirname(__FILE__), '..','servers', 'server.rb')}"
+    exec "ruby #{File.join(File.dirname(__FILE__), '..','servers', 'server.rb')} >> 'log.txt'"
   end
-  sleep 0.5
+  sleep 2
   pid
 end
 

@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
-begin
-@sinatra_pid = start_sinatra
 describe GcalFetcher::Connection do
+  before :all do @sinatra_pid = start_sinatra; end
+  after :all do stop_sinatra(@sinatra_pid); end
   before(:each)do
     @c = GcalFetcher::Connection.new
   end
@@ -23,25 +23,26 @@ end
 
 describe GcalFetcher::Item do
   before :all do
-    @c = GcalFetcher::Connection.new
+    @sinatra_pid = start_sinatra and @c = GcalFetcher::Connection.new
     @items = @c.entries.map{|entry| GcalFetcher::Item.new(entry)}
     @n_entries = @c.entries.size
   end
-
+  after :all do stop_sinatra(@sinatra_pid); end
+  
   it "should have a title" do
-    @items.select{|item| item.title.class == String}.size.should equal @n_entries
+    @items.select{|item| item.title.class == String}.size.should be @n_entries
   end
   it "should have an author" do
-    @items.select{|item| item.author.class == String}.size.should equal @n_entries
+    @items.select{|item| item.author.class == String}.size.should be @n_entries
   end
   it "should have a begin date" do
-    @items.select{|item| item.begins_at.class == DateTime}.size.should equal @n_entries
+    @items.select{|item| item.begins_at.class == DateTime}.size.should be @n_entries
   end
   it "should have an end date" do
-    @items.select{|item| item.ends_at.class == DateTime}.size.should equal @n_entries
+    @items.select{|item| item.ends_at.class == DateTime}.size.should be @n_entries
   end
-  it "should have an status, as a symbol" do
-    @items.select{|item| item.status.class == Symbol}.size.should equal @n_entries
+  it "should have an status" do
+    @items.select{|item| item.status.class}.size.should be @n_entries
   end
 end
 
@@ -54,7 +55,4 @@ describe "grouped feeds" do
 
   it "all events should have dates"
 
-end
-ensure
-stop_sinatra(@sinatra_pid)
 end
