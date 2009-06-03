@@ -3,7 +3,7 @@ require 'rubygems'
 require 'gcal_fetcher/connection'
 require 'gcal_fetcher/item'
 require 'gcal_fetcher/event'
-
+require 'gcal_fetcher/helper'
 module GcalFetcher
 
 end
