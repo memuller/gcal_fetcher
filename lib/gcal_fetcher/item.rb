@@ -14,7 +14,7 @@ module GcalFetcher
       (lines = entry.content.split(br)).each do |line|
         line.strip!
         unless line.empty?
-          var_name = line.split(':').first and var_value = line.gsub "#{var_name}:", ""
+          var_name = line.split(':').first and var_value = line.gsub("#{var_name}:", "")
           if i == 0 #first one's the date.
             if var_value.include? time_range_separator
               @begins_at = DateTime.parse(var_value.split(time_range_separator).first) and @ends_at = DateTime.parse(var_value.split(time_range_separator).last)
