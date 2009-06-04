@@ -1,13 +1,16 @@
 module GcalFetcher
   class Item
-    attr_accessor :title, :author, :begins_at, :ends_at, :fields, :status, :duration
+    attr_accessor :title, :author, :begins_at, :ends_at, :status, :duration, :time_range_separator, :fields
     def initialize(entry)
       field_names = {:pt => %w(Quando Quem Situação Descrição), :en => ['When','Who','Event Status', 'Description'], :sys => %w(begins_at author status)}
       time_range_separators = {:pt => ' a ', :en => ' to '}
       br = entry.content.include?('<br />') ? '<br />' : '<br>'
       field_names.keys.each do |language|
-        fields = field_names[language] and break if field_names[language].select{|name| entry.content[name]}.size > 0
-        time_range_separator = time_range_separators[:language]
+        if field_names[language].select{|name| entry.content[name]}.size > 0
+          @fields = field_names[language]
+          @time_range_separator = time_range_separators[language]
+          break
+        end
       end
       @title = entry.title 
       i = 0
