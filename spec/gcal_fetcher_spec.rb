@@ -12,7 +12,7 @@ describe GcalFetcher::Helper do
   end
 
   it "should convert a date string in pt to a DateTime object" do
-    GcalFetcher::Helper.date_convert_str(@date_str).class.should be DateTime
+    GcalFetcher::Helper.date_convert_to_en(@date_str).class.should be DateTime
   end
 end
 
